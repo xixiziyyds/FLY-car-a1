@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分体式飞行汽车的可行性边界 · 小鹏汇天「陆地航母」全方位调研与分析</title>
+<meta name="description" content="课程作业-1：以小鹏汇天分体式飞行汽车「陆地航母」（陆行体 + 飞行体 X3-F）为对象，做技术可行性、应用场景、市场可行性与竞争格局的全方位调研与分析。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111820; --ink-2:#3a4650; --ink-3:#6b7883;
+  --paper:#faf8f3; --paper-2:#f2eee4; --card:#fff;
+  --line:#e2dbcb; --line-2:#cfc6b2;
+  --copper:#a9541f; --copper-2:#c9762f; --teal:#1d5b57; --teal-2:#2f7d74;
+  --amber:#b8860b; --red:#9e2a22; --green:#2f6b46;
+  --shadow:0 1px 2px rgba(17,24,32,.06),0 18px 40px -28px rgba(17,24,32,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Noto Serif SC','Songti SC',Georgia,serif;
+  font-size:16.5px;line-height:1.82;letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+}
+.sans{font-family:'Noto Sans SC','PingFang SC',system-ui,sans-serif}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+a{color:var(--copper);text-decoration:none;border-bottom:1px solid rgba(169,84,31,.28)}
+a:hover{color:var(--copper-2);border-bottom-color:var(--copper-2)}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:60;background:rgba(250,248,243,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:1180px;margin:0 auto;padding:10px 40px;display:flex;align-items:center;gap:18px}
+.brand{font-size:13px;letter-spacing:.14em;color:var(--ink-2);white-space:nowrap}
+.brand b{color:var(--copper);font-weight:600}
+.navlinks{display:flex;flex-wrap:wrap;gap:1px}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{
+  font-family:'Noto Sans SC',sans-serif;font-size:11.5px;letter-spacing:.03em;
+  color:var(--ink-3);border:0;padding:4px 7px;border-radius:3px;white-space:nowrap;
+}
+.navlinks a:hover{background:var(--paper-2);color:var(--ink)}
+.navlinks a.on{background:var(--ink);color:#fff}
+.progress{height:2px;background:transparent}
+.progress i{display:block;height:2px;width:0;background:linear-gradient(90deg,var(--copper),var(--teal))}
+
+/* ---------- cover ---------- */
+.cover{
+  position:relative;overflow:hidden;color:#f3efe6;
+  background:
+    radial-gradient(1200px 520px at 12% -10%,rgba(169,84,31,.28),transparent 60%),
+    radial-gradient(900px 480px at 92% 8%,rgba(29,91,87,.30),transparent 62%),
+    linear-gradient(180deg,#0d1216 0%,#141c22 62%,#1a232a 100%);
+  padding:76px 0 56px;
+}
+.cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.cover .wrap{position:relative;z-index:2}
+.eyebrow{font-family:'Noto Sans SC',sans-serif;font-size:12px;letter-spacing:.22em;color:#d9c9ae;text-transform:uppercase}
+h1{
+  font-size:clamp(34px,4.6vw,58px);line-height:1.16;margin:20px 0 8px;font-weight:600;
+  letter-spacing:.01em;color:#fbf6ea;
+}
+h1 em{font-style:normal;color:#e8a268}
+.sub-en{font-family:'IBM Plex Mono',monospace;font-size:14px;letter-spacing:.06em;color:#a9b6bf;margin-bottom:26px}
+.lede{font-size:17.5px;color:#dfe5e2;max-width:760px}
+.lede-meta{
+  font-family:'Noto Sans SC',sans-serif;font-size:13px;color:#93a1aa;margin-top:26px;
+  display:flex;flex-wrap:wrap;gap:8px 22px;border-top:1px solid rgba(255,255,255,.14);padding-top:18px;
+}
+.lede-meta b{color:#e6d8bf;font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
+.kpi{
+  border:1px solid rgba(255,255,255,.16);border-radius:6px;padding:16px 16px 14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+}
+.kpi .num{font-family:'IBM Plex Mono',monospace;font-size:26px;color:#f1c48a;letter-spacing:-.01em}
+.kpi .num small{font-size:13px;color:#cfd7d3;margin-left:3px}
+.kpi .lab{font-family:'Noto Sans SC',sans-serif;font-size:12px;color:#b7c2c9;margin-top:6px;line-height:1.6}
+.cover .bare{font-size:12.5px;color:#8e9ba4;margin-top:22px;font-family:'Noto Sans SC',sans-serif}
+
+/* ---------- layout ---------- */
+main{padding:0 0 90px}
+.sec{padding:66px 0 8px;border-bottom:1px solid var(--line)}
+.sec:last-of-type{border-bottom:0}
+.sechead{display:grid;grid-template-columns:96px 1fr;gap:22px;align-items:end;margin-bottom:26px}
+.secno{font-family:'IBM Plex Mono',monospace;font-size:40px;color:var(--line-2);line-height:1;letter-spacing:-.02em}
+.secno::after{content:"";display:block;width:38px;height:2px;background:var(--copper);margin-top:10px}
+h2{font-size:30px;margin:0;font-weight:600;letter-spacing:.01em}
+.h2-en{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--ink-3);text-transform:uppercase;margin-top:6px}
+h3{font-size:21px;margin:34px 0 10px;font-weight:600;color:var(--ink)}
+h3::before{content:"";display:inline-block;width:6px;height:6px;background:var(--teal);border-radius:50%;margin-right:10px;vertical-align:2px}
+h4{font-size:16px;margin:22px 0 6px;font-weight:600;color:var(--ink-2);font-family:'Noto Sans SC',sans-serif}
+p{margin:12px 0}
+.lead{font-size:17px;color:var(--ink-2)}
+.small{font-size:13.5px;color:var(--ink-3);line-height:1.75}
+.hr{height:1px;background:var(--line);margin:30px 0}
+
+/* ---------- blocks ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px 24px;box-shadow:var(--shadow)}
+.card h4{margin-top:0}
+.note{border-left:3px solid var(--teal);background:var(--paper-2);padding:14px 18px;border-radius:0 6px 6px 0;font-size:14.5px;color:var(--ink-2)}
+.warn{border-left-color:var(--red);background:#fbf1ee}
+.judge{border-left-color:var(--copper);background:#fbf3ea}
+.note b{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{font-family:'Noto Sans SC',sans-serif;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line-2);color:var(--ink-2);background:#fff}
+.chip.a{border-color:rgba(47,107,70,.4);color:var(--green);background:#f1f7f2}
+.chip.b{border-color:rgba(184,134,11,.42);color:var(--amber);background:#fdf8ea}
+.chip.c{border-color:rgba(158,42,34,.38);color:var(--red);background:#fbf1ee}
+.chip.k{border-color:rgba(29,91,87,.38);color:var(--teal);background:#eff6f5}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:18px 0 8px;font-size:14px;background:#fff;box-shadow:var(--shadow)}
+caption{caption-side:top;text-align:left;font-size:12.5px;color:var(--ink-3);padding-bottom:8px;font-family:'Noto Sans SC',sans-serif}
+th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+thead th{
+  background:var(--ink);color:#f6f1e5;font-family:'Noto Sans SC',sans-serif;
+  font-weight:500;font-size:13px;letter-spacing:.04em;border-bottom:0;
+}
+tbody tr:nth-child(even){background:#fcfaf5}
+td.k{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-3);white-space:nowrap;width:82px}
+td.num,th.num{text-align:right;font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.tfoot{font-size:12.5px;color:var(--ink-3);margin-top:6px;font-family:'Noto Sans SC',sans-serif}
+
+/* figures */
+figure{margin:28px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px 22px 12px;box-shadow:var(--shadow)}
+figure svg{display:block;width:100%;height:auto}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:10px;font-family:'Noto Sans SC',sans-serif;line-height:1.65}
+figcaption b{color:var(--ink-2);font-weight:500}
+
+/* list */
+ol.steps{counter-reset:s;padding-left:0;list-style:none}
+ol.steps li{counter-increment:s;position:relative;padding-left:38px;margin:14px 0}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);position:absolute;left:0;top:2px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--copper);
+  border:1px solid var(--line-2);border-radius:50%;width:24px;height:24px;line-height:22px;text-align:center;
+}
+ul.tight{margin:10px 0;padding-left:22px}
+ul.tight li{margin:7px 0}
+
+/* tags in text */
+.tag{font-family:'Noto Sans SC',sans-serif;font-size:11.5px;padding:1px 6px;border-radius:3px;background:var(--paper-2);color:var(--ink-2);margin:0 2px}
+.tag.g{background:#eef6ef;color:var(--green)}
+.tag.r{background:#fbf0ee;color:var(--red)}
+.tag.y{background:#fdf7e6;color:var(--amber)}
+
+/* footer */
+footer{background:#0d1216;color:#9aa8b1;padding:46px 0 60px;font-size:13.5px}
+footer .wrap{max-width:1180px}
+footer h4{color:#e8dcc6;font-size:14px;letter-spacing:.12em}
+footer a{color:#c9946a;border-bottom-color:rgba(201,148,106,.4)}
+
+#topbtn{
+  position:fixed;right:26px;bottom:26px;width:42px;height:42px;border-radius:50%;
+  border:1px solid var(--line-2);background:rgba(250,248,243,.94);color:var(--ink-2);
+  font-size:16px;cursor:pointer;display:none;box-shadow:var(--shadow);z-index:70;
+}
+#topbtn:hover{background:#fff}
+
+@media (max-width:1180px){
+  .brand{display:none}
+}
+@media (max-width:900px){
+  .wrap{padding:0 22px}
+  .topbar-in{padding:10px 18px;gap:10px}
+  .kpis{grid-template-columns:1fr 1fr}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .sechead{grid-template-columns:56px 1fr;gap:14px}
+  .secno{font-size:28px}
+  h1{font-size:32px}
+  h2{font-size:23px}
+  table{font-size:13px}
+  th,td{padding:8px}
+}
+@media print{
+  .topbar,#topbtn{display:none}
+  .cover{background:#111;padding:40px 0}
+  .sec{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand">飞行汽车技术基础 · <b>作业-1</b> 调研与分析</div>
+    <nav class="navlinks" id="navlinks">
+      <a href="#s00">00 摘要</a>
+      <a href="#s01">01 方法</a>
+      <a href="#s02">02 对象</a>
+      <a href="#s03">03 构型</a>
+      <a href="#s04">04 技术可行性</a>
+      <a href="#s05">05 适航</a>
+      <a href="#s06">06 场景</a>
+      <a href="#s07">07 市场</a>
+      <a href="#s08">08 竞争</a>
+      <a href="#s09">09 商业</a>
+      <a href="#s10">10 风险</a>
+      <a href="#s11">11 结论</a>
+      <a href="#s12">12 附录</a>
+    </nav>
+  </div>
+  <div class="progress"><i id="bar"></i></div>
+</div>
+
+<header class="cover">
+  <div class="wrap">
+    <div class="eyebrow">Fundamentals of Flying Vehicle Technology · Assignment 01</div>
+    <h1>分体式飞行汽车的<em>可行性边界</em></h1>
+    <div class="sub-en">The Feasibility Frontier of a Modular Flying Car — XPENG ARIDGE "Land Aircraft Carrier"</div>
+    <p class="lede">以「陆行体 + 飞行体」可分离构型为核心，对小鹏汇天「陆地航母」做一次可复核的全方位调研：它解决了什么问题、技术成熟到什么程度、在哪些场景真的划算、市场能容纳多少台。</p>
+    <div class="lede-meta">
+      <span>作者 <b>YANXI · 吉林大学</b></span>
+      <span>证据截止 <b>2026-11-21</b></span>
+      <span>版本 <b>1.0</b></span>
+      <span>语言 <b>中英双语</b></span>
+      <span>形式 <b>GitHub Pages / index.html</b></span>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><div class="num">&lt;200<small>万元</small></div><div class="lab">整套系统（陆行体+飞行体）官方价格上限<br><span class="mono">≈ $280k</span></div></div>
+      <div class="kpi"><div class="num">7,000<small>+</small></div><div class="lab">全球累计预订（2026 年中口径）<br>对应意向金额约 140 亿元</div></div>
+      <div class="kpi"><div class="num">5,000<small>台/年</small></div><div class="lab">黄埔工厂首期年产能，满产 1 万台<br>30 分钟下线一台</div></div>
+      <div class="kpi"><div class="num">0</div><div class="lab">已颁发的 TC（截至 2026-11）<br>交付口径已后移至 2027</div></div>
+    </div>
+
+    <div class="bare">本页只回答「值不值得做、能不能做成、卖给谁」三类问题；同一对象的系统安全分析见作业-2，不复述。</div>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= 00 ================= -->
+<section class="sec" id="s00">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">00</div>
+      <div><h2>执行摘要</h2><div class="h2-en">Executive Summary</div></div>
+    </div>
+
+    <p class="lead">一句话结论：<b>「陆地航母」在工程上已经把“汽车装飞机”这件事做成了可制造的产品，但它的商业可行性目前被三件事同时卡住——适航取证节奏、单人飞行器的使用门槛、以及 200 万元价位对应的真实需求规模。</b></p>
+
+    <div class="grid3">
+      <div class="card">
+        <h4>技术侧：构型是对的</h4>
+        <p class="small">分体式把“上天”和“上街”拆给两个载具，绕开了整机式飞行汽车最难的一体化折衷：不必同时满足碰撞法规与航空重量约束。代价是折叠、对接、补能三套机构都要重新发明，且每一套都直接吃掉可用载荷与可靠性余度。</p>
+      </div>
+      <div class="card">
+        <h4>合规侧：卡在证上</h4>
+        <p class="small">X3-F 的 TC 申请 2024-03 受理、PC 2025-05 受理、2026-07 进入民航局首批 eVTOL 适航快速通道清单，2026-11 局方试飞完成、TC 进入待颁状态；但面向终端客户的交付已从 2026 年底后移到 2027。产品先于证存在，是这类企业当前的通病。</p>
+      </div>
+      <div class="card">
+        <h4>市场侧：早期是“体验品”</h4>
+        <p class="small">7,000 台预订里，海外批量协议（中东 600 台）与文旅、示范运营占大头；真正以私人日常通勤为动机的购买，受限于 20–30 分钟航时、起降点密度与执照门槛。它更接近“会飞的高端玩具 + 景区生产力工具”，而不是通勤工具。</p>
+      </div>
+    </div>
+
+    <h3>三条可检验的判断</h3>
+    <ol class="steps">
+      <li><b>构型红利真实存在，但被机构重量抵消。</b>分体式让飞行体可以按航空逻辑独立设计（双座、六轴六桨双涵道、约 50 kWh 电池、约 560 kg 空重），而陆行体按汽车逻辑做（三轴六轮、800V 增程、综合续航 &gt;1,000 km）。代价是陆行体必须为“装下并自动收放一架飞机”付出结构、机构与重心代价，这部分成本最终体现在 200 万元的售价上。</li>
+      <li><b>它的第一市场不是通勤，是低空文旅与示范运营。</b>按单架次能耗测算，一次 20 分钟飞行的电费约 40 元（用增程器发电约 130 元），而同等时间的双座直升机包机约 1,600–1,700 元。差价足以让景区、度假区、海岛与应急场景先跑起来；城市通勤则要等起降点网络和空域管理成熟。</li>
+      <li><b>真正的瓶颈是证与产能的错配，不是订单。</b>工厂首期 5,000 台/年、订单 7,000 台，理论上一年就能消化；但只要 TC/PC/AC 未闭环，产线下线的飞机只能停在“可飞不可交付”的状态。2027 的交付口径，本质是适航节奏的函数。</li>
+    </ol>
+
+    <div class="note judge">
+      <b>阅读提示：</b>本页所有数字分三类标注——<span class="chip a">A 官方/监管公开</span><span class="chip b">B 企业公开口径</span><span class="chip c">C 本页测算（含假设）</span>。C 类数字都给公式与假设，可自行复算；不要把 C 类当作企业数据引用。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 01 ================= -->
+<section class="sec" id="s01">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">01</div>
+      <div><h2>调研设计与证据方法</h2><div class="h2-en">Method &amp; Evidence</div></div>
+    </div>
+
+    <p>作业要求是“利用前面讲述的方法，也可以拓展其他任意方法”。本页采用三种方法的组合，避免只堆参数、不做判断：</p>
+
+    <table>
+      <caption>表 1-1　调研方法与产出</caption>
+      <thead><tr><th style="width:150px">方法</th><th>怎么用</th><th style="width:210px">产出</th></tr></thead>
+      <tbody>
+        <tr><td><b>产品解构</b><br><span class="mono">Product teardown</span></td><td>把整机拆成陆行体、飞行体、对接与收纳机构、能源与补能、飞控与座舱五个子系统，逐项问“它替代了什么旧方案、代价是什么”。</td><td>第 03 章构型解构表</td></tr>
+        <tr><td><b>可行性三问</b><br><span class="mono">Feasibility triad</span></td><td>技术可行性（能不能造、造出来能不能飞）、合规可行性（能不能取证、能不能合法运营）、经济可行性（单位成本与需求规模）。</td><td>第 04 / 05 / 07 章</td></tr>
+        <tr><td><b>场景适配矩阵</b><br><span class="mono">Use-case fit matrix</span></td><td>对 7 类场景按航时、起降条件、成本敏感度、监管难度四维打分，而不是笼统说“可用于文旅”。</td><td>第 06 章评分表</td></tr>
+        <tr><td><b>竞品定位</b><br><span class="mono">Competitive mapping</span></td><td>以“取证进度 × 商业化程度”为轴，把分体式、整机式、无人驾驶载人三类产品放到同一张图上。</td><td>第 08 章四象限</td></tr>
+        <tr><td><b>敏感性三情景</b><br><span class="mono">Scenario sensitivity</span></td><td>对交付时间、年销量、单台毛利做悲观/基准/乐观三情景，看结论是否翻转。</td><td>第 10 章情景表</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="3" class="tfoot">方法选择理由：本对象公开信息“营销密度高、审定信息稀”，因此必须以监管口径锚定时间线，以测算补足企业未披露的经济性。</td></tr></tfoot>
+    </table>
+
+    <h3>证据分级与口径冲突的处理</h3>
+    <p>调研中最容易出错的是把不同口径的数字放在一起比较。本页遇到三处必须显式说明的冲突：</p>
+    <ul class="tight">
+      <li><b>低空经济规模：</b>民航局口径“2025 年约 1.5 万亿元”，赛迪顾问口径“2025 年 7,151.2 亿元”。两者统计边界不同（前者含带动效应，后者偏产业直接规模）。本页两个都引，但不混算，市场测算一律用赛迪口径做基数。</li>
+      <li><b>订单数量：</b>2025 年初“3,000+ 台”，2026 年中“7,000+ 台”，其中含中东 600 台批量协议。本页把“预订”与“确定订单”分开表述，不把意向当营收。</li>
+      <li><b>交付时间：</b>企业 2024–2025 年口径为“2026 年量产交付”，2026-09 起口径变为“2027 年取得 CAAC 批准并向终端客户交付”。本页以后者为准，并把前者作为“计划 vs 实际”的偏差证据保留。</li>
+    </ul>
+
+    <div class="note">
+      <b>边界声明：</b>本页不评估该产品的安全性（属作业-2），不构成投资建议，也不对企业未公开的财务、产能利用率、单台成本做任何断言；凡涉及此类内容均以“测算/假设”标注。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 ================= -->
+<section class="sec" id="s02">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">02</div>
+      <div><h2>企业与产品画像</h2><div class="h2-en">Company &amp; Product Profile</div></div>
+    </div>
+
+    <h3>2.1　公司沿革：从“汇天”到“Aridge”</h3>
+    <p>小鹏汇天 2020 年 12 月成立于广州，是小鹏汽车生态内专注飞行汽车的板块，对外亦称 XPENG AeroHT，2026 年起在海外以 <b>Aridge</b> 品牌出现。它的路径与多数 eVTOL 初创不同：不是先做无人机再上人，而是<b>先绑定一家已经跑通汽车级量产体系的主机厂</b>，再把汽车工业的流水线、供应链与成本控制能力平移到航空产品上。</p>
+
+    <table>
+      <caption>表 2-1　关键沿革与资本事件（A 类为监管/官方，B 类为企业公开）</caption>
+      <thead><tr><th style="width:120px">时间</th><th>事件</th><th style="width:86px">证据</th></tr></thead>
+      <tbody>
+        <tr><td class="k">2020-12</td><td>广州汇天航空航天科技有限公司成立，切入飞行汽车</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2021-10</td><td>A 轮 5 亿美元，投资方含 IDG、云锋、五源、红杉中国、GGV、高瓴创投与小鹏汽车</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2024-03</td><td>飞行体 X3-F 型号合格证（TC）申请获民航中南局受理，进入适航审定</td><td><span class="chip a">A</span></td></tr>
+        <tr><td class="k">2024-08</td><td>B1 轮 1.5 亿美元</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2024-11</td><td>「陆地航母」在珠海航展完成全球公开载人首飞，并宣布 2026 年量产交付</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2025-04</td><td>12.6 亿元银团贷款落地，用于量产工厂与研发</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2025-05</td><td>X3-F 生产许可证（PC）申请获民航中南局受理；同期 TC 审查进入符合性确认阶段</td><td><span class="chip a">A</span></td></tr>
+        <tr><td class="k">2025-10</td><td>迪拜完成海外首次有人驾驶公开飞行演示</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2025-11</td><td>黄埔工厂试产，首台飞行体下线；同期发布全倾转旋翼机型 A868</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2026-03</td><td>5 台飞行器同日下线并完成多机试飞，标志进入批产准备阶段</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2026-07</td><td>被民航局纳入首批 eVTOL 适航审定快速通道合规清单</td><td><span class="chip a">A</span></td></tr>
+        <tr><td class="k">2026-08</td><td>第 1,000 台 X3-F 电推进单元下线</td><td><span class="chip b">B</span></td></tr>
+        <tr><td class="k">2026-10</td><td>首架 X3-F 试验机交付阿联酋，进入 GCAA 监管沙盒试运行；巴黎车展展出</td><td><span class="chip a">A</span></td></tr>
+        <tr><td class="k">2026-11</td><td>局方试飞完成，TC 进入待颁状态；终端交付口径后移至 2027</td><td><span class="chip a">A</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <b>读法：</b>这条时间线最值得注意的不是“进展多”，而是<b>证与产的相对速度</b>——工厂 2025-11 就下线了首台，TC 到 2026-11 仍在“待颁”。产线比证快一年，这在汽车行业是正常节奏，在航空行业则意味着大量在产品存货与现金流占用。
+    </div>
+
+    <h3>2.2　产品定义：一台“母舰”加一架“飞机”</h3>
+    <p>「陆地航母」不是一辆会飞的车，而是<b>一套两件套系统</b>：陆行体（三轴六轮增程汽车，负责地面移动、承载、收纳、补能）与飞行体（代号 X3-F 的双座 eVTOL，负责空中段）。飞行体折叠收纳于陆行体尾部舱内，抵达目的地后自动释放、展开、起飞，返场后自动回收。</p>
+
+    <figure>
+      <svg viewBox="0 0 1000 400" role="img" aria-label="分体式构型示意图：陆行体与其折叠收纳的飞行体">
+        <defs>
+          <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#33434e"/><stop offset="1" stop-color="#18232b"/>
+          </linearGradient>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+            <path d="M0 0 L7 3.5 L0 7 z" fill="#a9541f"/>
+          </marker>
+        </defs>
+        <rect x="0" y="0" width="1000" height="400" fill="#fbf9f4"/>
+
+        <!-- ===== panel A : ground module ===== -->
+        <text x="40" y="42" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="600" fill="#111820">① 陆行体（陆行母舰）</text>
+        <text x="40" y="62" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#6b7883">6×6 全轮驱动 · 后轮转向 · 800V 增程 · 综合续航 &gt;1,000 km · C 照可驾</text>
+
+        <line x1="30" y1="345" x2="430" y2="345" stroke="#cfc6b2" stroke-width="2"/>
+        <path d="M56 343 L56 286 Q56 266 80 261 L246 254 Q298 251 330 262 L396 284 L396 343 Z" fill="url(#gBody)"/>
+        <rect x="86" y="272" width="112" height="34" rx="6" fill="#93a4ae" opacity=".55"/>
+        <rect x="224" y="266" width="84" height="40" rx="6" fill="#93a4ae" opacity=".42"/>
+        <circle cx="106" cy="345" r="21" fill="#111820"/><circle cx="106" cy="345" r="8" fill="#5d6f7b"/>
+        <circle cx="216" cy="345" r="21" fill="#111820"/><circle cx="216" cy="345" r="8" fill="#5d6f7b"/>
+        <circle cx="342" cy="345" r="21" fill="#111820"/><circle cx="342" cy="345" r="8" fill="#5d6f7b"/>
+
+        <!-- stowed aircraft (dashed) -->
+        <rect x="258" y="276" width="122" height="46" rx="9" fill="none" stroke="#a9541f" stroke-width="1.4" stroke-dasharray="5 4"/>
+        <circle cx="288" cy="299" r="9" fill="none" stroke="#a9541f" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <circle cx="350" cy="299" r="9" fill="none" stroke="#a9541f" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <rect x="316" y="288" width="22" height="22" rx="6" fill="none" stroke="#a9541f" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="252" y="378" font-family="Noto Sans SC,sans-serif" font-size="10.5" fill="#a9541f">折叠收纳舱：飞行体折起后整体入舱，不占乘员空间</text>
+
+        <!-- ===== release arrow ===== -->
+        <path d="M404 300 C452 296 470 268 512 250" stroke="#a9541f" stroke-width="2" fill="none" marker-end="url(#ar)" stroke-dasharray="6 4"/>
+        <text x="398" y="238" font-family="Noto Sans SC,sans-serif" font-size="10.5" fill="#a9541f">释放 / 展开 · 5 分钟内</text>
+
+        <!-- ===== panel B : air module (plan view) ===== -->
+        <text x="470" y="42" font-family="Noto Sans SC,sans-serif" font-size="13.5" font-weight="600" fill="#111820">② 飞行体 X3-F（俯视示意）</text>
+        <text x="470" y="62" font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#6b7883">双座 · 六轴六桨 + 双涵道 · 空重 ≈ 560 kg · MTOW ≈ 760 kg</text>
+
+        <g stroke="#7d3b12" stroke-width="4">
+          <line x1="790" y1="200" x2="690" y2="200"/>
+          <line x1="740" y1="287" x2="680" y2="230"/>
+          <line x1="640" y1="287" x2="672" y2="230"/>
+          <line x1="590" y1="200" x2="660" y2="200"/>
+          <line x1="640" y1="113" x2="672" y2="170"/>
+          <line x1="740" y1="113" x2="680" y2="170"/>
+        </g>
+        <g fill="#f7ede1" stroke="#a9541f" stroke-width="2">
+          <circle cx="790" cy="200" r="24"/><circle cx="740" cy="287" r="24"/>
+          <circle cx="640" cy="287" r="24"/><circle cx="590" cy="200" r="24"/>
+          <circle cx="640" cy="113" r="24"/><circle cx="740" cy="113" r="24"/>
+        </g>
+        <g fill="#7d3b12">
+          <circle cx="790" cy="200" r="7"/><circle cx="740" cy="287" r="7"/>
+          <circle cx="640" cy="287" r="7"/><circle cx="590" cy="200" r="7"/>
+          <circle cx="640" cy="113" r="7"/><circle cx="740" cy="113" r="7"/>
+        </g>
+        <g fill="none" stroke="#b8860b" stroke-width="2.6">
+          <circle cx="612" cy="200" r="26"/><circle cx="770" cy="200" r="26"/>
+        </g>
+        <g fill="none" stroke="#b8860b" stroke-width="1" stroke-dasharray="4 3">
+          <circle cx="612" cy="200" r="17"/><circle cx="770" cy="200" r="17"/>
+        </g>
+        <ellipse cx="691" cy="200" rx="29" ry="50" fill="#8c4517"/>
+        <ellipse cx="691" cy="176" rx="17" ry="21" fill="#e8d8bf" opacity=".55"/>
+
+        <text x="562" y="342" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#3a4650">六桨 + 双涵道（金色虚线圈），单桨失效仍可控着陆（企业口径）</text>
+
+        <!-- ===== specs strip ===== -->
+        <line x1="40" y1="386" x2="960" y2="386" stroke="#e2dbcb"/>
+        <text x="40" y="399" font-family="IBM Plex Mono,monospace" font-size="10" fill="#6b7883">飞行体 2×25 kWh · 800V · 30→80% 约 18 min（由陆行体补能） · 航时 20–30 min · 陆行体满油满电支持 6 次飞行</text>
+      </svg>
+      <figcaption><b>图 2-1　分体式构型与关键参数。</b>左为陆行体（虚线为折叠收纳舱位置），右为释放后的飞行体俯视示意（非等比例）。参数取企业公开口径与海外媒体核对值（B 类）；航时随载荷与悬停占比变化，官方未公布航程数值，本页不代填。</figcaption>
+    </figure>
+
+    <h3>2.3　参数对照表</h3>
+    <table>
+      <caption>表 2-2　「陆地航母」公开参数与口径说明</caption>
+      <thead><tr><th style="width:130px">项目</th><th>数值</th><th style="width:250px">口径 / 备注</th></tr></thead>
+      <tbody>
+        <tr><td>整套售价</td><td>≤ 200 万元（约 $280k）</td><td>企业公布上限，未公布分项价格与配置梯度</td></tr>
+        <tr><td>陆行体尺寸</td><td>长约 5.5 m、宽约 2 m、高约 2 m</td><td>可停标准车位、可下地库；C 照可驾驶</td></tr>
+        <tr><td>陆行体驱动</td><td>三轴六轮，6×6 全轮驱动 + 后轮转向</td><td>强调承载与越野能力</td></tr>
+        <tr><td>陆行体动力</td><td>800V 碳化硅增程平台，综合续航 &gt;1,000 km</td><td>同时作为飞行体“移动超充站”；满油满电支持 6 次飞行</td></tr>
+        <tr><td>飞行体构型</td><td>双座、六轴六桨 + 双涵道</td><td>单桨失效仍可控着陆（企业口径）</td></tr>
+        <tr><td>飞行体重量</td><td>空重约 560 kg，最大起飞重量约 760 kg</td><td>海外媒体核对值，企业未逐项公布</td></tr>
+        <tr><td>飞行体能源</td><td>2×25 kWh、全域 800V 碳化硅</td><td>30→80% 约 18 分钟（由陆行体补能）</td></tr>
+        <tr><td>航时</td><td>约 20–30 分钟</td><td>官方未公布航程；媒体给出区间，实际随载荷/气象变化</td></tr>
+        <tr><td>操纵方式</td><td>单杆“四轴合一”+ 智能飞行座舱</td><td>企业称经培训可上手；仍需民航执照（见 05 章）</td></tr>
+        <tr><td>取证状态</td><td>TC 待颁（2026-11）；PC 已受理；AC 未发</td><td>交付口径 2027</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note warn">
+      <b>两个别被带跑的点：</b>①“200 万元以内”是<b>整套系统</b>的价格上限，不是飞行体单价，市场上任何“飞行体 X 万元”的说法都缺公开依据；②“5 分钟起飞”指从收纳状态到可起飞的地面准备时间，不等于“随时随地说飞就飞”，后者取决于空域申请与起降点条件（见 06 章）。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 ================= -->
+<section class="sec" id="s03">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">03</div>
+      <div><h2>构型解构：它到底替代了什么</h2><div class="h2-en">Architecture Teardown</div></div>
+    </div>
+
+    <p>评价一个飞行汽车构型，最容易犯的错是逐项比参数。更有效的问法是：<b>它替代了谁的方案，换来了什么，又付出了什么</b>。分体式的答案很清晰——它把飞行汽车最难的一体化折衷，拆给了两个各自成熟的技术体系。</p>
+
+    <h3>3.1　三种主流构型的取舍</h3>
+    <table>
+      <caption>表 3-1　整机式 / 分体式 / 无人驾驶载人 eVTOL 的工程设计取舍</caption>
+      <thead><tr><th style="width:120px">构型</th><th>代表</th><th>最大优势</th><th>最大代价</th></tr></thead>
+      <tbody>
+        <tr><td><b>整机式</b><br><span class="mono">Integrated</span></td><td>Alef Model A、Terrafugia Transition</td><td>一台机器完成门到门，无需换乘与转运</td><td>必须同时满足公路碰撞法规与航空重量/冗余要求，两套法规互相挤压，导致两栖能力都打折</td></tr>
+        <tr><td><b>分体式</b><br><span class="mono">Modular</span></td><td><b>小鹏汇天 陆地航母</b></td><td>飞行体可纯按航空逻辑设计；陆行体可纯按汽车逻辑设计；飞行体不飞时可被运走，避免“飞机上路”的法规死结</td><td>折叠、对接、补能三套机构带来重量与成本；换乘有中断；一套系统两个适航/合规主体</td></tr>
+        <tr><td><b>无人驾驶载人</b><br><span class="mono">Autonomous</span></td><td>亿航 EH216-S</td><td>无需飞行执照，运营方可集中管理，最容易做景区/城市空中交通</td><td>依赖地面调度与航线保障；私人拥有体验弱；载荷与航程偏小</td></tr>
+      </tbody>
+    </table>
+
+    <p>这张表解释了一个常见困惑：为什么小鹏汇天选择“造两台”这种看起来更笨的方案。因为在现行法规下，<b>“会飞的车”几乎无法同时过碰撞与适航两套门槛</b>，而“车运飞机”只要求飞行体过适航、陆行体过整车公告，两条路各自都是成熟路径。</p>
+
+    <h3>3.2　五个子系统，各自的真难题</h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>① 陆行体：为“装飞机”付出的结构代价</h4>
+        <p class="small">三轴六轮、6×6 驱动与后轮转向，本质是为一个大质量、高重心的货舱做承载与机动性补偿。车长 5.5 m、宽高各 2 m 的边界，是在“能装下折叠后的飞行体”与“能停标准车位/下地库”之间取的折衷。800V 增程平台既是行驶动力，也是飞行体的补能电站——这使陆行体的能量系统必须按“车辆 + 充电桩”双重工况设计。</p>
+        </div>
+      <div class="card">
+        <h4>② 折叠与收纳：最不性感但最致命</h4>
+        <p class="small">六轴六桨双涵道的构型意味着展开状态下有较大的投影尺寸，折叠后要塞进 2 m 宽的车体。桨叶、涵道、起落架、机臂都要参与折叠，每一处铰接都是重量、刚度、疲劳与异物卡阻的风险点。企业公开的“5 分钟内完成起飞准备”实际考核的是这套机构的可靠性，而不是飞控。</p>
+      </div>
+      <div class="card">
+        <h4>③ 对接与释放：精度问题变成安全问题</h4>
+        <p class="small">自动释放/回收要求陆行体在非平整地面也能提供稳定的释放姿态。对接偏差、相对运动、地面风都会传导到飞行体起降阶段。这也是为什么这类产品普遍把“自动”做成“辅助自动”，并保留人工接管。</p>
+      </div>
+      <div class="card">
+        <h4>④ 能源与补能：50 kWh 决定了一切</h4>
+        <p class="small">2×25 kWh、800V 的系统，按 20–30 分钟航时折算，平均功率约 100–150 kW。这个能量级别决定了：它只能在“短途、点对点、有补能保障”的场景里成立，而没有可能承担城际交通。陆行体“满油满电支持 6 次飞行”实际上定义了它的运营半径。</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h4>⑤ 飞控与座舱：把“开飞机”降维成“开车”</h4>
+      <p class="small">“四轴合一”单杆操纵 + 智能飞行座舱，产品逻辑是把飞行员的操作负荷压到最低，让汽车用户能迁移。但要注意：<b>降低操纵难度 ≠ 降低执照门槛</b>。按现行规章，驾驶有人驾驶航空器仍需相应的驾驶员执照与体检，这一点在产品宣传里常被模糊（第 05 章展开）。</p>
+    </div>
+
+    <div class="note judge">
+      <b>判断：</b>分体式的技术红利是“让两个成熟体系各自发挥”，代价是把系统集成难度从“设计整机”转移到“设计接口”。这类产品的工程成熟度，本质上取决于接口（折叠、对接、补能）的成熟度，而不是飞行性能指标。
+    </div>
+  </div>
+</section>
+<!-- ================= 04 ================= -->
+<section class="sec" id="s04">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">04</div>
+      <div><h2>技术可行性评估</h2><div class="h2-en">Technical Feasibility</div></div>
+    </div>
+
+    <p>“技术可行”在这个产品上有两层含义：<b>造得出来</b>（制造与供应链）、<b>飞得起来并可控</b>（气动、能源、飞控）。前者已经被工厂下线的事实回答了大半，后者要看试飞与适航验证的深度。本章按子系统给出成熟度评级，再收敛成一句判断。</p>
+
+    <h3>4.1　子系统成熟度（TRL 视角）</h3>
+    <table>
+      <caption>表 4-1　子系统技术成熟度与判据（TRL 采用 NASA 9 级定义，评级为本页判断）</caption>
+      <thead><tr><th style="width:120px">子系统</th><th style="width:70px" class="num">TRL</th><th>判据（为什么给这个级别）</th><th style="width:180px">主要不确定性</th></tr></thead>
+      <tbody>
+        <tr><td>陆行体整车</td><td class="num">8</td><td>基于成熟汽车平台改造，已完成整车公告与试产；增程动力总成在汽车上已量产</td><td>货舱结构与重心对操控的影响</td></tr>
+        <tr><td>飞行体气动与结构</td><td class="num">7</td><td>六轴六桨双涵道构型已完成多机试飞、局方试飞；批产工装已贯通</td><td>涵道效率、桨叶折叠后的疲劳寿命</td></tr>
+        <tr><td>电推进单元</td><td class="num">8</td><td>第 1,000 台电推进单元已下线，说明进入批产一致性问题而非原理问题</td><td>适航件级鉴定与供应商产能</td></tr>
+        <tr><td>动力电池</td><td class="num">7</td><td>航空级电芯由电池厂专线量产；50 kWh/800V 系统能量密度为核心指标</td><td>热失控防护的适航符合性、循环寿命</td></tr>
+        <tr><td>折叠 / 收纳机构</td><td class="num">6</td><td>功能已验证，但机构可靠性需要长周期循环试验支撑（这是全系统最薄弱的一环）</td><td>卡阻、异物、重复定位精度</td></tr>
+        <tr><td>自动对接 / 释放</td><td class="num">5–6</td><td>演示级可用，地面条件泛化（坡度、风、雨雪）尚未公开验证</td><td>非平整地面与侧风下的对接容差</td></tr>
+        <tr><td>飞控与座舱</td><td class="num">7</td><td>单杆操纵 + 智能座舱已装机；局方试飞完成说明基本操控律已闭环</td><td>失效降级逻辑的适航验证深度</td></tr>
+        <tr><td>地面补能系统</td><td class="num">7</td><td>陆行体可 18 分钟补至 80%，属工程实现问题</td><td>高频次运营下的电池热管理与寿命</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="4" class="tfoot">TRL 说明：8 = 实际系统在运行环境中验证通过；7 = 原型在运行环境演示；6 = 原型在相关环境验证；5 = 相关环境部件验证。</td></tr></tfoot>
+    </table>
+
+    <div class="note">
+      <b>结论：</b>除“折叠机构”和“自动对接”两项仍在 5–6 级，其余子系统均已达到 7–8 级。也就是说，<b>这个产品不是“能不能飞”的问题，而是“机构能不能长期可靠工作、并在适航框架下被证明”的问题</b>。
+    </div>
+
+    <h3>4.2　三个无法用参数绕过的工程约束</h3>
+    <div class="grid3">
+      <div class="card">
+        <h4>重量预算</h4>
+        <p class="small">空重约 560 kg、MTOW 约 760 kg，意味着<b>可用载荷只有约 200 kg</b>（含乘员、行李、选装）。这个数字直接决定了“双座 + 少量行李”是它的物理上限，任何“三人版/载货版”都需要重新设计而非选装。</p>
+      </div>
+      <div class="card">
+        <h4>能量预算</h4>
+        <p class="small">50 kWh 支撑 20–30 分钟飞行，折算平均功率 100–150 kW。若把航时提升到 60 分钟，需要能量翻倍或整机减重 30%——两者都触及现有构型的天花板。这是“为什么所有分体式产品的航时都在 30 分钟内”的根本原因。</p>
+      </div>
+      <div class="card">
+        <h4>接口预算</h4>
+        <p class="small">折叠 + 对接 + 补能三套机构，都要在 2 m 宽的车体内工作，且必须在 5 分钟内完成状态转换。这类机构的可靠性通常用“循环次数”考核（例如数千次收放），而公开材料尚未给出该指标——这是尽调时应当追问的第一个问题。</p>
+      </div>
+    </div>
+
+    <h3>4.3　与“整机式”方案的技术对比</h3>
+    <p>把分体式与整机式放在同一张表上，可以看到它们的困难不在同一个维度：整机式难在“同时满足两套法规”，分体式难在“接口工程化”。</p>
+    <table>
+      <thead><tr><th style="width:150px">维度</th><th>分体式（陆地航母）</th><th>整机式（Alef Model A 等）</th></tr></thead>
+      <tbody>
+        <tr><td>适航路径</td><td>飞行体单独按 CCAR-21 取证，路径清晰</td><td>整机需按航空器取证，同时满足道路法规，路径复杂</td></tr>
+        <tr><td>地面机动</td><td>由陆行体承担，性能接近普通 SUV/MPV</td><td>飞行与行驶共用一套底盘，两栖性能均被折衷</td></tr>
+        <tr><td>使用流程</td><td>需下车、展开、起飞，流程长但各步成熟</td><td>门到门连续，流程短但每步都在法规灰区</td></tr>
+        <tr><td>重量效率</td><td>重复建设（两套动力、两套结构）</td><td>共享结构，但需为两种工况分别加强</td></tr>
+        <tr><td>规模化制造</td><td>可复用汽车流水线，30 分钟/台</td><td>接近航空手工作坊，产能爬坡慢</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note judge">
+      <b>技术可行性总判断：可行，且已经跨过“演示”阶段进入“批产一致性”阶段。</b>剩下的风险集中在两个接口（折叠、对接）与一个证明（适航符合性），都是工程与审定问题，不是科学问题。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 ================= -->
+<section class="sec" id="s05">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">05</div>
+      <div><h2>适航与合规路径</h2><div class="h2-en">Certification &amp; Compliance</div></div>
+    </div>
+
+    <p>这是全篇最“硬”的一章，也是判断交付时间唯一可靠的依据。<b>飞行汽车的时间表不由企业决定，由四张证决定。</b></p>
+
+    <h3>5.1　四证链条：TC → PC → AC → OC</h3>
+    <table>
+      <caption>表 5-1　四证含义与本产品当前状态（截至 2026-11-21）</caption>
+      <thead><tr><th style="width:70px">证</th><th style="width:210px">含义</th><th>本产品状态</th><th style="width:120px">证据</th></tr></thead>
+      <tbody>
+        <tr><td><b>TC</b></td><td>型号合格证：证明<b>设计</b>符合适航规章</td><td>2024-03 受理；2025-05 进入符合性确认；2026-07 列入首批快速通道清单；2026-11 局方试飞完成、<b>待颁</b></td><td><span class="chip a">A</span></td></tr>
+        <tr><td><b>PC</b></td><td>生产许可证：证明<b>生产体系与质量系统</b>能持续产出符合设计的产品</td><td>2025-05 受理，审查进行中</td><td><span class="chip a">A</span></td></tr>
+        <tr><td><b>AC</b></td><td>单机适航证：证明<b>这一架</b>可安全运行</td><td>未颁发；按业界节奏通常在 TC 之后逐架办理</td><td><span class="chip b">B</span></td></tr>
+        <tr><td><b>OC</b></td><td>运行合格证：证明运营人具备<b>安全运营能力</b>（若企业自营）</td><td>未涉及；私人自用则由持有人按相应规则运行</td><td><span class="chip c">C</span></td></tr>
+      </tbody>
+    </table>
+
+    <figure>
+      <svg viewBox="0 0 1000 330" role="img" aria-label="适航取证时间线">
+        <rect x="0" y="0" width="1000" height="330" fill="#fbf9f4"/>
+        <g font-family="IBM Plex Mono,monospace" font-size="11" fill="#6b7883">
+          <text x="150" y="28">2024</text><text x="350" y="28">2025</text><text x="550" y="28">2026</text><text x="750" y="28">2027</text><text x="930" y="28">2028</text>
+        </g>
+        <g stroke="#e2dbcb" stroke-width="1">
+          <line x1="150" y1="40" x2="150" y2="290"/><line x1="350" y1="40" x2="350" y2="290"/>
+          <line x1="550" y1="40" x2="550" y2="290"/><line x1="750" y1="40" x2="750" y2="290"/>
+          <line x1="930" y1="40" x2="930" y2="290"/>
+        </g>
+        <!-- rows -->
+        <g font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#3a4650">
+          <text x="40" y="78">TC 型号合格</text>
+          <text x="40" y="130">PC 生产许可</text>
+          <text x="40" y="182">AC 单机适航</text>
+          <text x="40" y="234">终端交付</text>
+        </g>
+        <!-- TC bar -->
+        <rect x="188" y="62" width="330" height="22" rx="3" fill="#1d5b57" opacity=".82"/>
+        <text x="196" y="78" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#f2f7f6">受理 → 符合性确认 → 局方试飞</text>
+        <rect x="518" y="62" width="96" height="22" rx="3" fill="#a9541f" opacity=".55"/>
+        <text x="524" y="78" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#fff">待颁</text>
+        <path d="M614 73 l16 0" stroke="#a9541f" stroke-width="2" stroke-dasharray="5 4"/>
+        <!-- PC bar -->
+        <rect x="386" y="114" width="210" height="22" rx="3" fill="#1d5b57" opacity=".72"/>
+        <text x="394" y="130" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#f2f7f6">2025-05 受理，审查中</text>
+        <!-- AC -->
+        <rect x="614" y="166" width="230" height="22" rx="3" fill="#b8860b" opacity=".5"/>
+        <text x="622" y="182" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#3a3208">预计逐架办理（推算）</text>
+        <!-- delivery -->
+        <rect x="614" y="218" width="290" height="22" rx="3" fill="#9e2a22" opacity=".55"/>
+        <text x="622" y="234" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#fff">2027 起向终端客户交付（企业口径）</text>
+        <!-- plan vs actual -->
+        <rect x="470" y="252" width="140" height="16" rx="3" fill="#cfc6b2"/>
+        <text x="470" y="290" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6b7883">原计划：2026 年底量产交付</text>
+        <line x1="610" y1="260" x2="520" y2="248" stroke="#9e2a22" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="626" y="290" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#9e2a22">实际：后移约 1 年</text>
+        <!-- now -->
+        <line x1="600" y1="40" x2="600" y2="290" stroke="#111820" stroke-width="1.5"/>
+        <text x="604" y="52" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#111820">今天（2026-11）</text>
+      </svg>
+      <figcaption><b>图 5-1　取证与交付时间线。</b>深绿为已发生的审查进程，橙色为“待颁”窗口，红色为交付后移。AC/交付段为按业界节奏的推算（C 类），不作为事实引用。</figcaption>
+    </figure>
+
+    <h3>5.2　双轨合规：飞行体走航空，陆行体走汽车</h3>
+    <p>这套产品的特殊之处在于它同时被两套法规管理：飞行体按《民用航空产品和零部件合格审定规定》（CCAR-21）走 TC/PC/AC；陆行体按汽车公告与强制性标准走，可上牌、可上路、需 C 照驾驶。企业把这种安排称为“分别依照航空与汽车相关流程取证”。</p>
+
+    <table>
+      <caption>表 5-2　使用侧合规要点（私人购买视角）</caption>
+      <thead><tr><th style="width:150px">环节</th><th>要求</th><th style="width:180px">现实影响</th></tr></thead>
+      <tbody>
+        <tr><td>地面驾驶</td><td>C 类驾驶证，车辆需上牌、年检、投保</td><td>与传统 MPV 无异，门槛低</td></tr>
+        <tr><td>飞行驾驶</td><td>有人驾驶航空器需相应驾驶员执照与体检；具体类别按局方对该型号的运行要求确定</td><td>门槛显著高于开车，需专门培训与持续经历保持</td></tr>
+        <tr><td>空域与航线</td><td>需按低空空域管理规定申请飞行计划，进入管制空域须批复</td><td>决定“能不能随时飞”，是体验的关键约束</td></tr>
+        <tr><td>起降场地</td><td>需满足起降场地的净空、地面承载与消防要求</td><td>决定“能飞到哪”，与起降点网络强相关</td></tr>
+        <tr><td>保险</td><td>航空器需专门机身险与第三者责任险</td><td>早期费率不确定，是运营成本变量</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note warn">
+      <b>最容易被营销话术模糊的一点：</b>“新手培训即可上手”说的是<b>操纵难度</b>，不是<b>执照门槛</b>。只要它是有人员驾驶的航空器，就必须有人持有相应执照。购买决策里必须把“执照 + 训练 + 年检 + 空域申请”作为固定成本计入，否则算不出真实持有成本。
+    </div>
+
+    <h3>5.3　海外路径：为什么中东是第一个落点</h3>
+    <p>2026-10 首架 X3-F 试验机交付阿联酋，进入阿联酋民航局（GCAA）监管下的“先进低空飞行监管示范区”沙盒试运行；此前 2025-10 已在迪拜完成海外首次有人驾驶公开飞行。中东市场的价值不在销量，而在于<b>监管沙盒提供了一个“可运营但不必等本国 TC 闭环”的窗口</b>：先在真实场景跑运行数据，再反哺国内审定与运营体系。</p>
+    <p>这也是理解“7,000 台预订”的关键——其中相当一部分是海外政府/企业客户的示范运营与批量协议（中东四家集团合计 600 台），而不是个人消费订单。</p>
+
+    <div class="note judge">
+      <b>合规判断：</b>技术准备度领先合规准备度约 12–18 个月。2027 的交付口径不是保守，而是把 TC 待颁 → AC 逐架 → 运行体系搭建的链条如实排进了时间表。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 ================= -->
+<section class="sec" id="s06">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">06</div>
+      <div><h2>应用场景分析</h2><div class="h2-en">Use-Case Analysis</div></div>
+    </div>
+
+    <p>“可应用于文旅、应急、通勤”这类清单没有决策价值。本章给 7 类场景按四个维度打分：<b>航时够不够</b>（20–30 分钟是否覆盖）、<b>起降条件</b>（是否需要专门场地）、<b>成本敏感度</b>（客户是否在意单次价格）、<b>监管难度</b>（空域与执照）。</p>
+
+    <table>
+      <caption>表 6-1　七类场景适配度评分（5 = 最有利，1 = 最不利；评分为本页判断）</caption>
+      <thead><tr><th style="width:150px">场景</th><th class="num" style="width:86px">航时匹配</th><th class="num" style="width:86px">起降条件</th><th class="num" style="width:86px">成本敏感</th><th class="num" style="width:86px">监管难度</th><th class="num" style="width:70px">综合</th><th>判读</th></tr></thead>
+      <tbody>
+        <tr><td><b>低空文旅 / 景区观光</b></td><td class="num">4</td><td class="num">4</td><td class="num">5</td><td class="num">3</td><td class="num"><b>4.0</b></td><td>单次 15–20 分钟正好；景区自带场地与客流；客单价可覆盖成本</td></tr>
+        <tr><td><b>度假区 / 海岛接驳</b></td><td class="num">3</td><td class="num">4</td><td class="num">4</td><td class="num">3</td><td class="num"><b>3.5</b></td><td>点对点短驳最契合；但海岛风大、盐雾环境对机体不友好</td></tr>
+        <tr><td><b>应急救援 / 医疗转运</b></td><td class="num">2</td><td class="num">2</td><td class="num">5</td><td class="num">2</td><td class="num"><b>2.75</b></td><td>航时与载荷不足，双座难承担 stretcher 任务；但支付方是公共财政</td></tr>
+        <tr><td><b>电力 / 油气巡检</b></td><td class="num">3</td><td class="num">3</td><td class="num">4</td><td class="num">3</td><td class="num"><b>3.25</b></td><td>有人驾驶成本高，被工业无人机替代的风险大</td></tr>
+        <tr><td><b>城市通勤</b></td><td class="num">1</td><td class="num">1</td><td class="num">2</td><td class="num">1</td><td class="num"><b>1.25</b></td><td>起降点密度、空域、噪音三重约束，近五年不成立</td></tr>
+        <tr><td><b>公务 / 商务接待</b></td><td class="num">3</td><td class="num">3</td><td class="num">5</td><td class="num">3</td><td class="num"><b>3.5</b></td><td>形象价值大于交通价值，是 200 万元价位最现实的需求</td></tr>
+        <tr><td><b>农林 / 播撒作业</b></td><td class="num">1</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num"><b>2.5</b></td><td>载荷与效率均不如专用无人机，不构成主战场</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="7" class="tfoot">综合分 = 四维等权均值。评分为定性判断，用于排序而非精确度量。</td></tr></tfoot>
+    </table>
+
+    <div class="note">
+      <b>评分口径说明：</b>“成本敏感”得分越高表示该场景客户对单次价格越不敏感，越有利于早期定价；“监管难度”得分越高表示越容易获批。四维等权是为了让排序可解释，不代表任何一维可以替代其他维度。
+    </div>
+
+    <h3>6.1　为什么“文旅”是第一个真市场</h3>
+    <p>把三个数字放在一起就明白了：景区一次 15–20 分钟的空中观光，客单价可以卖到数百至上千元；而它的直接能源成本只有几十元。这个毛利结构足以支撑设备折旧、机组与场地成本，并且<b>不依赖日常通勤所需的起降点网络</b>——景区自身就是起降点。</p>
+
+    <figure>
+      <svg viewBox="0 0 1000 320" role="img" aria-label="单次飞行直接成本对比">
+        <rect x="0" y="0" width="1000" height="320" fill="#fbf9f4"/>
+        <g font-family="Noto Sans SC,sans-serif" font-size="12" fill="#3a4650">
+          <text x="40" y="52">eVTOL（充电，20 min）</text>
+          <text x="40" y="112">eVTOL（增程器发电，20 min）</text>
+          <text x="40" y="172">双座直升机（包机，20 min）</text>
+          <text x="40" y="232">同距离豪华网约车</text>
+        </g>
+        <g font-family="IBM Plex Mono,monospace" font-size="12" fill="#111820">
+          <rect x="330" y="36" width="46" height="22" rx="3" fill="#1d5b57"/>
+          <text x="386" y="53">≈ 40 元</text>
+          <rect x="330" y="96" width="150" height="22" rx="3" fill="#2f7d74"/>
+          <text x="490" y="113">≈ 130 元</text>
+          <rect x="330" y="156" width="640" height="22" rx="3" fill="#9e2a22" opacity=".8"/>
+          <text x="330" y="196" fill="#9e2a22">≈ 1,600–1,700 元（按 5,000 元/小时折算）</text>
+          <rect x="330" y="216" width="70" height="22" rx="3" fill="#6b7883"/>
+          <text x="410" y="233">≈ 60–100 元</text>
+        </g>
+        <line x1="40" y1="262" x2="960" y2="262" stroke="#cfc6b2"/>
+        <text x="40" y="290" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#6b7883">假设：电价 0.8 元/kWh、电池 50 kWh；增程发电 0.35 L/kWh、油价 7.5 元/L；直升机 5,000 元/小时。均为本页测算（C 类），仅比较数量级。</text>
+      </svg>
+      <figcaption><b>图 6-1　单次飞行直接成本的数量级差异。</b>不计折旧、机组、场地、保险；仅用于说明“为什么文旅与体验场景先成立，而日常通勤不成立”。</figcaption>
+    </figure>
+
+    <h3>6.2　场景成立的必要条件</h3>
+    <ol class="steps">
+      <li><b>起降点在场内。</b>景区、度假区、海岛酒店可以把起降点建在自己的地界内，绕开城市起降点审批的最大难点。</li>
+      <li><b>航线短且固定。</b>20–30 分钟航时对应约 30–80 km 的巡航半径（视构型与风况），恰好覆盖“景区环线”与“岛际短驳”。</li>
+      <li><b>支付方不是乘客本人。</b>早期最健康的商业模型是“运营方买设备、乘客买单次”，而不是“个人买设备自用”。这决定了它的客户结构是 B 端为主。</li>
+    </ol>
+
+    <div class="note judge">
+      <b>场景总判断：</b>文旅 &gt; 公务接待 ≈ 海岛接驳 &gt; 巡检 &gt; 应急 &gt; 农林 &gt; 通勤。前两类足以支撑早期商业化；通勤在 2030 年前不具备工程与基础设施条件。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 ================= -->
+<section class="sec" id="s07">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">07</div>
+      <div><h2>市场可行性</h2><div class="h2-en">Market Feasibility</div></div>
+    </div>
+
+    <p>市场可行性要回答三个问题：<b>谁买</b>（需求结构）、<b>买得起吗</b>（价格与持有成本）、<b>能供多少</b>（产能与产值）。本章用公开数据搭一个自下而上的 TAM/SAM/SOM 估算，并把每个假设写出来。</p>
+
+    <h3>7.1　需求结构：订单不是需求</h3>
+    <p>公开口径显示，全球累计预订从 2025 年初的 3,000+ 台增长到 2026 年中的 7,000+ 台，其中中东四家集团合计 600 台为批量协议，2026 年产能配额据报已售罄。按 200 万元上限价折算，7,000 台的意向金额约 140 亿元——这是<b>意向，不是营收</b>，且大量集中在中国与海湾地区的 B 端客户。</p>
+
+    <table>
+      <caption>表 7-1　需求分层与对应规模（自上而下校验 + 自下而上估算）</caption>
+      <thead><tr><th style="width:130px">需求层</th><th style="width:150px">客户</th><th>估算逻辑</th><th class="num" style="width:110px">潜在台数</th><th class="num" style="width:110px">对应金额</th></tr></thead>
+      <tbody>
+        <tr><td>示范 / 政府</td><td>中东主权与商界集团、国内示范区</td><td>已披露中东 600 台协议；国内按每个示范区 5–20 台计</td><td class="num">600–1,000</td><td class="num">12–20 亿元</td></tr>
+        <tr><td>文旅运营</td><td>5A/4A 景区、度假区、通航企业</td><td>假设 5A 景区 339 家中 20%、4A 约 3,000 家中 5% 引入，每处 2 台</td><td class="num">≈ 436</td><td class="num">≈ 8.7 亿元</td></tr>
+        <tr><td>私人 / 公务</td><td>高净值家庭、企业接待</td><td>千万资产家庭约 211 万户，假设 0.2% 购买</td><td class="num">≈ 4,220</td><td class="num">≈ 84 亿元</td></tr>
+        <tr><td>海外其他</td><td>欧洲、东南亚、拉美经销商</td><td>以已披露的巴黎车展、IFA 等渠道拓展为线索，按国内需求的 10–20% 估</td><td class="num">500–900</td><td class="num">10–18 亿元</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="5" class="tfoot">台数为情景假设（C 类），金额按 200 万元/台计。5A/4A 景区数量、千万资产家庭数量为公开统计口径的近似值，用于数量级判断，不作精确引用。</td></tr></tfoot>
+    </table>
+
+    <figure>
+      <svg viewBox="0 0 1000 330" role="img" aria-label="TAM SAM SOM 分层">
+        <rect x="0" y="0" width="1000" height="330" fill="#fbf9f4"/>
+        <g font-family="Noto Sans SC,sans-serif">
+          <polygon points="180,40 820,40 700,120 300,120" fill="#1d5b57" opacity=".16"/>
+          <polygon points="300,120 700,120 620,200 380,200" fill="#1d5b57" opacity=".3"/>
+          <polygon points="380,200 620,200 560,280 440,280" fill="#a9541f" opacity=".38"/>
+        </g>
+        <g font-family="IBM Plex Mono,monospace" font-size="12" fill="#111820">
+          <text x="196" y="72">TAM　低空经济总盘</text>
+          <text x="196" y="92" font-size="11" fill="#3a4650">2025 年 7,151 亿元（赛迪口径）· 2035 年 3.5 万亿（民航局口径）</text>
+          <text x="316" y="152">SAM　载人飞行汽车可及市场</text>
+          <text x="316" y="172" font-size="11" fill="#3a4650">示范 + 文旅 + 私人公务 ≈ 10,000 台 ≈ 200 亿元（3–5 年）</text>
+          <text x="396" y="232">SOM　汇天已锁定</text>
+          <text x="396" y="252" font-size="11" fill="#3a4650">7,000 台 × 200 万 ≈ 140 亿元（含海外意向）</text>
+        </g>
+        <line x1="60" y1="298" x2="940" y2="298" stroke="#cfc6b2"/>
+        <text x="60" y="320" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#6b7883">注：三层口径不同，非同比例缩放；TAM 为产业总规模，SAM 为可及细分，SOM 为企业自身订单。数量级比较用，不可相加减。</text>
+      </svg>
+      <figcaption><b>图 7-1　TAM / SAM / SOM 分层。</b>三层统计口径不一致，仅用于回答“盘子多大、我们占多少”，不可用于份额计算。SAM 取 10,000 台口径（含尚未转化的潜在需求），与表 7-1 自下而上合计的 5,800–6,600 台并不矛盾：前者是 3–5 年窗口的可及上限，后者是当前可点名的客户群。</figcaption>
+    </figure>
+
+    <h3>7.2　价格与持有成本：200 万元买了什么</h3>
+    <p>按 200 万元上限、10 年直线折旧计，仅折旧就是 <b>20 万元/年</b>；再加上执照训练、保险、维保、起降场地与空域协调，私人持有的年化固定成本很可能落在 30–40 万元区间——这个数字已经接近一台豪华行政轿车的年持有成本，而使用频次远低于汽车。</p>
+
+    <table>
+      <caption>表 7-2　私人持有成本粗略构成（C 类测算，仅示意量级）</caption>
+      <thead><tr><th style="width:160px">项目</th><th class="num" style="width:140px">年成本估算</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>折旧</td><td class="num">≈ 20 万元</td><td>200 万元 / 10 年</td></tr>
+        <tr><td>保险</td><td class="num">不明</td><td>航空器机身险与三者险早期费率未公开，是最大不确定项</td></tr>
+        <tr><td>维保与航材</td><td class="num">不明</td><td>航空级定检成本显著高于汽车保养</td></tr>
+        <tr><td>执照与训练</td><td class="num">一次性 + 年度复训</td><td>按机型与执照类别而定，需向运营方确认</td></tr>
+        <tr><td>能源</td><td class="num">≈ 0.4 万元 / 100 架次</td><td>按 40 元/架次充电计</td></tr>
+        <tr><td>停机与场地</td><td class="num">视所在地</td><td>需满足净空与消防要求，不能等同于普通车位</td></tr>
+      </tbody>
+    </table>
+
+    <h3>7.3　供给侧：产能与产值</h3>
+    <p>黄埔工厂建筑面积约 12 万平方米，规划年产能 1 万台、首期 5,000 台，满产节拍 30 分钟/台。按 200 万元/台计，首期满产对应年产值上限约 <b>100 亿元</b>——与 7,000 台、140 亿元的订单池基本匹配，意味着<b>只要证到位，产能不是瓶颈</b>。</p>
+
+    <div class="note">
+      <b>由此得到一个反直觉的结论：</b>这家公司当前缺的不是订单、也不是产能，而是<b>把已下线的飞机合法交到客户手里的资格</b>。市场可行性在需求端是“够用”，在合规端是“待解锁”。
+    </div>
+
+    <div class="note judge">
+      <b>市场判断：</b>早期市场真实存在，但结构是“B 端示范 + 文旅 + 少量私人”；随着 TC/AC 闭环与起降点铺开，2028–2030 年才可能进入私人消费的规模化阶段。把 7,000 台预订当作“消费市场已启动”的证据，是高估。
+    </div>
+  </div>
+</section>
+<!-- ================= 08 ================= -->
+<section class="sec" id="s08">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">08</div>
+      <div><h2>竞争格局</h2><div class="h2-en">Competitive Landscape</div></div>
+    </div>
+
+    <p>飞行汽车赛道的竞争，本质是<b>取证速度与场景落地速度的竞争</b>，不是参数竞争。把三类玩家放到“取证进度 × 商业化程度”的坐标系里，各自的位置一目了然。</p>
+
+    <figure>
+      <svg viewBox="0 0 1000 470" role="img" aria-label="竞争格局四象限">
+        <rect x="0" y="0" width="1000" height="470" fill="#fbf9f4"/>
+        <line x1="120" y1="400" x2="920" y2="400" stroke="#3a4650" stroke-width="1.4"/>
+        <line x1="120" y1="400" x2="120" y2="120" stroke="#3a4650" stroke-width="1.4"/>
+        <line x1="520" y1="120" x2="520" y2="400" stroke="#e2dbcb" stroke-dasharray="6 5"/>
+        <line x1="120" y1="260" x2="920" y2="260" stroke="#e2dbcb" stroke-dasharray="6 5"/>
+
+        <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#9aa6ae">
+          <text x="132" y="136">有产品 · 未取证</text>
+          <text x="908" y="136" text-anchor="end">取证闭环 · 已运营</text>
+          <text x="132" y="388">概念 / 原型</text>
+          <text x="908" y="388" text-anchor="end">有证 · 缺场景</text>
+        </g>
+
+        <text x="520" y="440" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#3a4650">取证进度 →</text>
+        <text x="70" y="260" transform="rotate(-90 70,260)" text-anchor="middle" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#3a4650">商业化程度 →</text>
+
+        <circle cx="840" cy="190" r="9" fill="#1d5b57"/>
+        <text x="826" y="182" text-anchor="end" font-family="Noto Sans SC,sans-serif" font-size="12" fill="#1d5b57">亿航 EH216-S（四证齐全）</text>
+
+        <circle cx="700" cy="236" r="9" fill="#a9541f"/>
+        <text x="686" y="228" text-anchor="end" font-family="Noto Sans SC,sans-serif" font-size="12.5" fill="#a9541f">汇天 陆地航母（TC 待颁）</text>
+
+        <circle cx="560" cy="272" r="6" fill="#6b7883"/>
+        <text x="546" y="264" text-anchor="end" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#3a4650">Joby / Archer（FAA 推进中）</text>
+
+        <circle cx="610" cy="330" r="6" fill="#6b7883"/>
+        <text x="596" y="322" text-anchor="end" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#3a4650">沃飞长空 AE200（审定深水区）</text>
+
+        <circle cx="250" cy="320" r="6" fill="#9e2a22"/>
+        <text x="264" y="312" font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#3a4650">Alef Model A（原型阶段）</text>
+
+        <circle cx="186" cy="362" r="5" fill="#b8860b"/>
+        <text x="200" y="354" font-family="Noto Sans SC,sans-serif" font-size="11" fill="#3a4650">Terrafugia（商业化受挫）</text>
+
+        <path d="M700 236 C760 210 800 198 828 194" stroke="#a9541f" stroke-width="1.2" fill="none" stroke-dasharray="4 3"/>
+        <text x="792" y="236" font-family="Noto Sans SC,sans-serif" font-size="10" fill="#6b7883">差一步：TC</text>
+      </svg>
+      <figcaption><b>图 8-1　竞争格局四象限。</b>横轴为适航取证进度，纵轴为商业化实现程度（是否有真实运营、收入与可复制场景）。位置为本页按公开信息判断，非精确度量。</figcaption>
+    </figure>
+
+    <h3>8.1　主要竞争者的真实位置</h3>
+    <table>
+      <caption>表 8-1　竞争者对照（信息截至 2026-11 公开材料）</caption>
+      <thead><tr><th style="width:160px">玩家</th><th style="width:120px">形态</th><th>进展</th><th style="width:120px">对本产品的威胁</th></tr></thead>
+      <tbody>
+        <tr><td><b>亿航 EH216-S</b></td><td>无人驾驶载人 eVTOL</td><td>TC（2023-10）、AC（2023-12）、PC（2024-03）、OC（2025-03）四证齐全，已在多国开展运营，累计飞行架次与覆盖国家数为行业公开口径最高</td><td>高：抢占景区与城市空中交通首批场景</td></tr>
+        <tr><td><b>沃飞长空 AE200</b></td><td>有人驾驶 eVTOL（倾转旋翼）</td><td>适航审定进入较深阶段，公开预期 2026 年取证</td><td>中高：同走“有人驾驶 + 商业运营”，但非分体式</td></tr>
+        <tr><td><b>Joby / Archer</b></td><td>有人驾驶 eVTOL（美国）</td><td>FAA 型号审定推进中，商业化尚在早期</td><td>低（短期）：主要影响欧美市场与资本叙事</td></tr>
+        <tr><td><b>Alef Model A</b></td><td>整机式飞行汽车</td><td>原型与预订单阶段，取证路径未闭环</td><td>低：验证“整机式”路线的困难</td></tr>
+        <tr><td><b>汇天 A868</b><br><span class="small">（同一公司）</span></td><td>全倾转旋翼、高速长航程</td><td>2025-11 发布，进入飞行验证</td><td>内部竞争：面向城际，与陆地航母分工</td></tr>
+      </tbody>
+    </table>
+
+    <h3>8.2　汇天的差异化护城河在哪里</h3>
+    <ul class="tight">
+      <li><b>制造能力差异化。</b>把汽车流水线引入航空制造，30 分钟/台的节拍是同行难以复制的——这决定了它在“证到位之后”的放量速度会显著快于航空创业公司。</li>
+      <li><b>产品形态差异化。</b>全球范围内，能把“飞机装进后备箱”做成量产产品的目前只有它一家；这既是卖点，也意味着<b>没有可直接对标的工程经验</b>，机构可靠性只能自己趟。</li>
+      <li><b>资本与生态差异化。</b>背靠小鹏汽车，共享供应链、渠道与品牌；但也意味着产品叙事长期与母公司绑定，独立品牌（Aridge）能否在海外立住仍需观察。</li>
+    </ul>
+
+    <div class="note judge">
+      <b>竞争判断：</b>在“有人驾驶 + 私人拥有”这个细分里，汇天几乎没有直接对手；但在“载人低空商业化”这个大池子里，它落后亿航一个取证周期。它真正的对手不是同行，是<b>时间</b>。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 09 ================= -->
+<section class="sec" id="s09">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">09</div>
+      <div><h2>商业模式与运营体系</h2><div class="h2-en">Business Model &amp; Operations</div></div>
+    </div>
+
+    <p>一个 200 万元、需要执照、需要场地、需要空域批复的产品，卖出去只是开始。真正决定它能否规模化的是<b>围绕它长出来的运营体系</b>。本章拆四层：卖给谁、怎么用、怎么养、怎么赚钱。</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h4>第一层：销售模式</h4>
+        <p class="small">当前是“整套系统直销 + 预订金”模式，价格上限 200 万元。可预见的演化是分三层：① B 端整体解决方案（景区/度假区买整套含起降点）；② 私人整车销售；③ 分时租赁/会员制（降低个人门槛，把执照与维保留在运营方）。</p>
+      </div>
+      <div class="card">
+        <h4>第二层：使用流程</h4>
+        <p class="small">车辆行驶 → 到达起降点 → 自动释放并展开（5 分钟内）→ 起飞 → 返场回收 → 继续地面行驶。流程里有两个“人”的环节：驾驶员上机前检查、以及空域/航线批复。运营方若能把后者前置（预批航线），体验才顺。</p>
+      </div>
+      <div class="card">
+        <h4>第三层：后市场</h4>
+        <p class="small">航空器的成本大头在生命周期后半段：定检、航材、电池更换、机构大修。能否建立“授权维修网点 + 航材备件池 + 远程诊断”三位一体的后市场，决定了单机年均可用率与客户口碑。这是汽车企业相对航空企业的真正优势所在。</p>
+      </div>
+      <div class="card">
+        <h4>第四层：收入结构</h4>
+        <p class="small">整车毛利之外，可持续收入应来自：培训与执照服务、起降点建设与运营、保险与金融方案、数据与调度服务。若只靠卖硬件，这类企业的估值会随交付节奏剧烈波动。</p>
+      </div>
+    </div>
+
+    <h3>9.1　三种可跑的运营模型</h3>
+    <table>
+      <caption>表 9-1　运营模型对比（C 类推演，用于说明结构而非预测财务）</caption>
+      <thead><tr><th style="width:130px">模型</th><th>谁买设备</th><th>谁持有执照</th><th>收入来源</th><th>适配场景</th></tr></thead>
+      <tbody>
+        <tr><td><b>自营体验</b></td><td>景区 / 度假区</td><td>运营方雇佣的持照飞行员</td><td>单次体验票（数百至上千元）</td><td>文旅、海岛</td></tr>
+        <tr><td><b>会员制</b></td><td>运营公司</td><td>运营方</td><td>年费 + 次数包</td><td>高净值人群聚集区</td></tr>
+        <tr><td><b>私人自用</b></td><td>个人</td><td>车主本人（需执照）</td><td>无（成本中心）</td><td>公务接待、郊区通勤替代</td></tr>
+      </tbody>
+    </table>
+
+    <p>三种模型里，<b>只有前两种能在早期跑出正现金流</b>。私人自用模型在现阶段的作用是品牌与口碑，而不是财务贡献——这也是为什么 7,000 台预订中 B 端占比高，是健康而非异常的结构。</p>
+
+    <div class="note">
+      <b>一个具体的判断题：</b>如果某景区买 2 台（400 万元）做观光，单次定价 800 元、日均 6 架次、年运营 200 天，年收入约 96 万元；扣除飞行员、维保、保险、能耗后，回本周期大致 5–7 年。这个算式是否成立，取决于单次定价能否被市场接受——这也是文旅场景最需要验证的商业假设。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 10 ================= -->
+<section class="sec" id="s10">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">10</div>
+      <div><h2>风险清单与情景敏感性</h2><div class="h2-en">Risks &amp; Scenario Sensitivity</div></div>
+    </div>
+
+    <p>本章只列“会改变结论”的风险，不列“所有产品都有”的通用风险。每条给出触发信号，便于后续跟踪。</p>
+
+    <table>
+      <caption>表 10-1　关键风险与触发信号</caption>
+      <thead><tr><th style="width:56px">#</th><th style="width:130px">风险</th><th>为什么关键</th><th style="width:210px">触发信号（可跟踪）</th></tr></thead>
+      <tbody>
+        <tr><td class="k">R1</td><td><b>取证继续后移</b></td><td>交付时间完全由 TC/AC 决定；每延后一年，产品在技术上就老一年，竞品在场景上就多占一年</td><td>TC 颁证时点、AC 发放节奏、局方对运行限制（如是否限载客）的附加条件</td></tr>
+        <tr><td class="k">R2</td><td><b>折叠机构可靠性</b></td><td>全系统最薄弱环节，直接决定可用率与维保成本</td><td>公开的收放循环试验次数、机构大修间隔、早期客户故障反馈</td></tr>
+        <tr><td class="k">R3</td><td><b>起降点与空域</b></td><td>没有起降点网络，200 万元的产品只能停在家里</td><td>各城市低空起降点规划落地数、常态化航线批复数</td></tr>
+        <tr><td class="k">R4</td><td><b>执照与训练门槛</b></td><td>决定了“个人购买”这一层的真实转化率</td><td>是否推出简化类别的运行许可、培训体系与价格</td></tr>
+        <tr><td class="k">R5</td><td><b>成本与价格</b></td><td>200 万元是上限不是承诺；航空级供应链涨价会挤压毛利</td><td>电池、电推进单元的批产成本曲线；是否推出低配版</td></tr>
+        <tr><td class="k">R6</td><td><b>需求结构单一</b></td><td>订单集中在 B 端与海外示范区，若政策或油价/汇率变化，订单可延可退</td><td>预订转定金的转化率、退订率、国内私人订单占比</td></tr>
+        <tr><td class="k">R7</td><td><b>事故与舆情</b></td><td>低空载人产品对单起事故极度敏感，一次事故可冻结整个品类</td><td>试飞与示范运行的事件通报、监管对同类产品的临时措施</td></tr>
+        <tr><td class="k">R8</td><td><b>竞品取证超车</b></td><td>亿航已闭环、沃飞在审定深水区，场景先发优势会被锁定</td><td>竞品 OC 扩城节奏、景区招标结果</td></tr>
+      </tbody>
+    </table>
+
+    <h3>10.1　三情景敏感性</h3>
+    <table>
+      <caption>表 10-2　2027 年交付情景（C 类测算，仅用于看结论是否翻转）</caption>
+      <thead><tr><th style="width:120px">情景</th><th style="width:150px">2027 交付量</th><th class="num" style="width:150px">对应收入</th><th>成立条件</th></tr></thead>
+      <tbody>
+        <tr><td><b>悲观</b></td><td>200 台</td><td class="num">≈ 4 亿元</td><td>TC 2027 下半年才颁，AC 逐架办理缓慢，仅海外沙盒与少数示范客户交付</td></tr>
+        <tr><td><b>基准</b></td><td>800 台</td><td class="num">≈ 16 亿元</td><td>TC 2027 上半年颁发，AC 批量发放，文旅与海外示范先行</td></tr>
+        <tr><td><b>乐观</b></td><td>2,000 台</td><td class="num">≈ 40 亿元</td><td>TC 提前、起降点政策配套到位、私人订单转化率超预期</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="4" class="tfoot">收入按 200 万元/台计，未扣渠道与税费。三情景的差异几乎全部由“取证时点”这一个变量驱动——这正是本产品的单点依赖。</td></tr></tfoot>
+    </table>
+
+    <div class="note warn">
+      <b>最需要盯的一个指标：</b>不是订单数，也不是产能，而是<b>TC 颁证及其附加的运行限制</b>。如果证上带了限制性条件（例如限定场景、限定载客状态），那么“私人买来自己飞”的商业模式需要重新设计。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 11 ================= -->
+<section class="sec" id="s11">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">11</div>
+      <div><h2>结论与建议</h2><div class="h2-en">Conclusions &amp; Recommendations</div></div>
+    </div>
+
+    <p class="lead">回到最初的三问：<b>值不值得做、能不能做成、卖给谁</b>。答案分别是：值得做（构型选择正确且已跨过演示阶段）、能做成分阶段的产品（但不快）、先卖给 B 端与景区，再谈私人。</p>
+
+    <h3>11.1　四个结论</h3>
+    <ol class="steps">
+      <li><b>构型判断正确。</b>分体式把法规冲突转化为接口工程问题，是当前法规环境下最现实的飞行汽车解法；它的技术风险集中在折叠与对接两个接口，而不是飞行性能。</li>
+      <li><b>工程准备度领先合规准备度。</b>工厂已批量下线、局方试飞完成、TC 待颁，但 AC 与运行体系尚需时间；2027 交付是合规节奏的如实反映，不是产能问题。</li>
+      <li><b>商业化的第一站是文旅与示范，不是通勤。</b>单架次直接成本与直升机差一到两个数量级，足以支撑景区定价；而城市通勤受起降点、空域、噪音三重约束，2030 年前不成立。</li>
+      <li><b>市场盘子够大，但早期结构偏 B 端。</b>7,000 台预订对应约 140 亿元意向金额，首期产能 5,000 台对应约 100 亿元年产值上限——供需两侧都不缺，缺的是“合法交付”的开关。</li>
+    </ol>
+
+    <h3>11.2　给三类读者的建议</h3>
+    <div class="grid3">
+      <div class="card">
+        <h4>对厂商</h4>
+        <ul class="tight small">
+          <li>把“收放机构循环寿命”作为对外披露的硬指标，这是尽调必问项，主动公开能换取信任。</li>
+          <li>尽早把商业模式从“卖硬件”扩到“卖运营”，用景区/度假区整体方案锁定首批场景。</li>
+          <li>海外沙盒（阿联酋）应作为运行数据与运营体系的试验田，而不是销量数字。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>对买家</h4>
+        <ul class="tight small">
+          <li>把持有成本按“折旧 + 保险 + 维保 + 执照 + 场地”五项全算，不要只看 200 万元车价。</li>
+          <li>先确认本地是否有可用起降点与航线批复路径，再谈购买。</li>
+          <li>确认交付时随机提供的是 TC/AC 齐全的量产机，而非试验机或演示机。</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>对监管与产业</h4>
+        <ul class="tight small">
+          <li>起降点规划应前置于整机取证，否则产品下线即闲置。</li>
+          <li>对“简化类别的飞行许可”做制度探索，是释放私人市场的关键杠杆。</li>
+          <li>示范运行数据的公开口径应统一，避免市场以营销数字替代运行数据。</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>11.3　三阶段路线图</h3>
+    <figure>
+      <svg viewBox="0 0 1000 260" role="img" aria-label="三阶段路线图">
+        <rect x="0" y="0" width="1000" height="260" fill="#fbf9f4"/>
+        <line x1="60" y1="120" x2="940" y2="120" stroke="#cfc6b2" stroke-width="3"/>
+        <g>
+          <circle cx="180" cy="120" r="10" fill="#1d5b57"/>
+          <circle cx="500" cy="120" r="10" fill="#2f7d74"/>
+          <circle cx="820" cy="120" r="10" fill="#a9541f"/>
+        </g>
+        <g font-family="IBM Plex Mono,monospace" font-size="12" fill="#6b7883">
+          <text x="150" y="98">2027</text><text x="470" y="98">2028–2029</text><text x="790" y="98">2030+</text>
+        </g>
+        <g font-family="Noto Sans SC,sans-serif" font-size="13" fill="#111820">
+          <text x="92" y="152">取证与首批交付</text>
+          <text x="404" y="152">场景规模化</text>
+          <text x="740" y="152">私人市场与城际</text>
+        </g>
+        <g font-family="Noto Sans SC,sans-serif" font-size="11.5" fill="#3a4650">
+          <text x="60" y="180">TC/AC 闭环 · 中东沙盒</text>
+          <text x="60" y="200">首批文旅与示范客户</text>
+          <text x="372" y="180">起降点网络铺开 · 会员制</text>
+          <text x="372" y="200">A868 进入城际验证</text>
+          <text x="700" y="180">私人购买转化 · 分时租赁</text>
+          <text x="700" y="200">空域管理常态化</text>
+        </g>
+      </svg>
+      <figcaption><b>图 11-1　三阶段路线图。</b>阶段划分依据是“证—场景—市场”的先后依赖关系，而非日历年份本身。</figcaption>
+    </figure>
+
+    <div class="note judge">
+      <b>最后一句判断：</b>「陆地航母」证明了中国企业能把飞行汽车<b>造出来</b>；它还没证明的是，这门生意能不能在<b>证的节奏</b>里活到规模化那天。前一个问题已经解决，后一个问题正在 2027 年等待答案。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 12 ================= -->
+<section class="sec" id="s12">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="secno">12</div>
+      <div><h2>附录：假设、公式与参考</h2><div class="h2-en">Appendix</div></div>
+    </div>
+
+    <h3>12.1　关键测算与公式（C 类）</h3>
+    <table>
+      <caption>表 12-1　本页所有自算数字及公式</caption>
+      <thead><tr><th style="width:190px">指标</th><th style="width:240px">公式 / 假设</th><th class="num" style="width:120px">结果</th></tr></thead>
+      <tbody>
+        <tr><td>订单意向金额</td><td>7,000 台 × 200 万元</td><td class="num">≈ 140 亿元</td></tr>
+        <tr><td>首期产能年产值上限</td><td>5,000 台 × 200 万元</td><td class="num">≈ 100 亿元</td></tr>
+        <tr><td>单架次电费</td><td>50 kWh × 0.8 元/kWh</td><td class="num">≈ 40 元</td></tr>
+        <tr><td>单架次增程发电成本</td><td>50 kWh × 0.35 L/kWh × 7.5 元/L</td><td class="num">≈ 131 元</td></tr>
+        <tr><td>直升机同时间成本</td><td>5,000 元/小时 × 20/60 小时</td><td class="num">≈ 1,667 元</td></tr>
+        <tr><td>文旅潜在台数</td><td>339×20%×2 + 3,000×5%×2</td><td class="num">≈ 436 台</td></tr>
+        <tr><td>私人潜在台数</td><td>211 万户 × 0.2%</td><td class="num">≈ 4,220 台</td></tr>
+        <tr><td>年折旧</td><td>200 万元 / 10 年</td><td class="num">≈ 20 万元</td></tr>
+        <tr><td>平均电功率（航时 20 min）</td><td>50 kWh / (20/60 h)</td><td class="num">≈ 150 kW</td></tr>
+        <tr><td>平均电功率（航时 30 min）</td><td>50 kWh / (30/60 h)</td><td class="num">≈ 100 kW</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="3" class="tfoot">所有测算均为数量级估算，未考虑效率损耗、税费、渠道折扣与规模效应；不可用于财务预测。</td></tr></tfoot>
+    </table>
+
+    <h3>12.2　术语</h3>
+    <table>
+      <thead><tr><th style="width:150px">术语</th><th>解释</th></tr></thead>
+      <tbody>
+        <tr><td>TC / PC / AC / OC</td><td>型号合格证 / 生产许可证 / 单机适航证 / 运行合格证，民用航空产品与运行的四道门槛</td></tr>
+        <tr><td>分体式（Modular）</td><td>飞行器与地面载具物理分离，可收纳、可组合的飞行汽车构型</td></tr>
+        <tr><td>eVTOL</td><td>电动垂直起降航空器</td></tr>
+        <tr><td>MTOW</td><td>最大起飞重量</td></tr>
+        <tr><td>ODO / 航时</td><td>本页用“航时”而非“航程”，因官方未公布后者</td></tr>
+        <tr><td>沙盒（Sandbox）</td><td>监管机构在限定范围内允许新产品试运行的制度安排</td></tr>
+      </tbody>
+    </table>
+
+    <h3>12.3　参考文献</h3>
+    <ol class="tight small">
+      <li>小鹏汽车. 小鹏汇天“陆地航母”飞行体型号合格证（TC）申请获局方受理. 2024-03-25. https://www.xiaopeng.com/news/company_news/5271.html</li>
+      <li>小鹏汽车. 小鹏汇天“陆地航母”飞行汽车实车首次亮相广州. 2024-09-04. https://www.xiaopeng.com/news/company_news/5361.html</li>
+      <li>小鹏汽车. “陆地航母”珠海航展完成全球公开首飞. 2024-11-12. https://www.xiaopeng.com/news/company_news/5419.html</li>
+      <li>小鹏汽车. “陆地航母”海外首秀（CES 2025）. 2025-01-08. https://www.xiaopeng.com/news/company_news/5438.html</li>
+      <li>小鹏汽车. 飞行体生产许可证（PC）申请获局方受理. 2025-05-12. https://www.xiaopeng.com/news/company_news/5466.html</li>
+      <li>小鹏汽车. 发布第二代 VLA、Robotaxi、IRON 与飞行汽车（含 A868、量产进展）. 2025-11-17. https://www.xiaopeng.com/news/company_news/5511.html</li>
+      <li>小鹏汽车. 小鹏集团受邀参加 2026 世界智能博览会（2026 年底量产交付口径）. 2026-06-02. https://www.xiaopeng.com/news/company_news/5569.html</li>
+      <li>36 氪. 飞行汽车的商业化实战，中国头部公司已经到哪一步了？2026-10-21. https://36kr.com/p/4035366850204800</li>
+      <li>36 氪. 产品未见，营销先行：eVTOL 这一波. 2025-11-19. https://36kr.com/p/3559724371532166</li>
+      <li>中国基金报. 小鹏汇天飞行汽车批量试产下线. 2026-03-05. https://app-web.chnfund.com/jx/202603/t20260305_4643614.html</li>
+      <li>新浪财经. 首架交付阿联酋的飞行汽车在广州下线（含 X3-F 参数与价格口径）. 2026-10-21. https://cj.sina.com.cn/articles/view/1652484947/627eeb530200216q6</li>
+      <li>搜狐科技. 中东客户率团来华提货：接收首架小鹏飞行汽车. 2026-10-21. http://news.sohu.com/a/1090576795_122014422</li>
+      <li>Avi-Go. Xpeng's Aridge Prices Land Aircraft Carrier Below 2 Million Yuan. 2026-11-12. https://avi-go.com/news/articles/3a39779f6de661e71286483262892648</li>
+      <li>Venture Atlas. Land Aircraft Carrier — Aridge（规格与审定状态）. 2026-09-07. https://www.ventureatlas.org/product/aridge-land-aircraft-carrier</li>
+      <li>Venture Atlas. Aridge — Company Profile, Milestones &amp; Funding. 2026-09-07. https://www.ventureatlas.org/company/aridge</li>
+      <li>天眼查/雪球. 一张“不能载客”的 TC 证，和 7000 台交不出去的订单. 2026-11-02. https://news.tianyancha.com/ll_z5vdv81bnd.html</li>
+      <li>东方财富研报中心. 低空经济行业周报（PC 受理）. 2025-05-11. https://pdf.dfcfw.com/pdf/H3_AP202505111670945218_1.pdf</li>
+      <li>福建省工信厅转赛迪顾问《中国低空经济发展研究报告（2026）》：2025 年规模 7,151.2 亿元. 2026-11-03. http://gxt.fj.gov.cn/zwgk/xw/hydt/xydt/202611/t20261103_7244052.htm</li>
+      <li>新华网. 逐空而上！低空经济加速启航万亿新赛道（民航局 1.5 万亿 / 3.5 万亿预测）. 2025-12-22. https://www.news.cn/fortune/20251222/1a9ded8c452846a5a858f12866e39f07/c.html</li>
+      <li>财富中文网. 中国 eVTOL 产业发展研究报告. 2026-07-20. https://www.fortunechina.com/shangye/c/2026-07/20/content_475359.htm</li>
+      <li>中证网. 低空经济迈向场景化应用元年. 2026-01-29. https://www.cs.com.cn/cj2020/202601/t20260129_6535732.html</li>
+      <li>国家统计局转载：低空经济相关数据（eVTOL 年度订单额超 300 亿元）. 2025-12-25. https://www.stats.gov.cn/zs/tjwh/tjkw/tjqk/zgxxb/202512/P020251225319555072939.pdf</li>
+      <li>pasqualepillitteri.it. Xpeng Aridge: Preis und Auslieferung（价格与交付口径）. 2026-11-12. https://pasqualepillitteri.it/de/news/32339/xpeng-aridge-transporter-flugzeug-preis-auslieferung</li>
+      <li>课程参考页：Tesla Roadster 案例（结构与证据分级范式）. https://lab.autozyx.com/fundamentals-of-flying-vehicle-technology/tesla-flying-roadster/</li>
+    </ol>
+
+    <div class="note">
+      <b>AI 使用说明：</b>本页的公开事实检索、口径比对、测算复核与排版由 AI 辅助完成；所有事实均给出来源链接，所有测算均给出公式与假设。文中不含 AI 生成的试验数据，也不对产品作任何安全或投资背书。
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h4>飞行汽车技术基础 · 课程作业-1</h4>
+    <p>研究对象：小鹏汇天「陆地航母」（陆行体 + 飞行体 X3-F）。本页为调研与分析，不构成安全评估、投资建议或购买建议；同一对象的系统安全分析见作业-2。</p>
+    <p class="mono" style="font-size:12px;color:#7c8b94">证据截止 2026-11-21 · 版本 1.0 · YANXI 吉林大学</p>
+  </div>
+</footer>
+
+<button id="topbtn" aria-label="返回顶部">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('bar');
+  var btn=document.getElementById('topbtn');
+  var links=Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function onScroll(){
+    var h=document.documentElement, st=h.scrollTop||document.body.scrollTop;
+    var max=(h.scrollHeight-h.clientHeight)||1;
+    bar.style.width=(st/max*100)+'%';
+    btn.style.display = st>600 ? 'block' : 'none';
+    var idx=-1;
+    secs.forEach(function(s,i){ if(s.getBoundingClientRect().top<140) idx=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on', i===idx); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  onScroll();
+})();
+</script>
+</body>
+</html>
